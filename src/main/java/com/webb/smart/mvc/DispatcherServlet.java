@@ -39,6 +39,7 @@ public class DispatcherServlet extends HttpServlet {
     public void init() throws ServletException {
         ControllerCollection.init();
         ClassUtil.loadClass(BeanUtil.class.getName(), true);
+        ClassUtil.loadClass(IocUtil.class.getName(), true);
     }
 
     @Override

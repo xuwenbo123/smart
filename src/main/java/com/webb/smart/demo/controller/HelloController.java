@@ -24,7 +24,6 @@ public class HelloController {
 
     @RequestMapping(value = "/hello/service", method = RequestMethod.GET, produces = MediaTypes.JSON_UTF_8)
     public String helloService(String name) {
-        Map<Class<?>, Object> map = BeanUtil.getBeanMap();
         helloService.helloService();
         return name;
     }

@@ -1,10 +1,5 @@
 package com.webb.smart.util;
 
-import com.webb.smart.mvc.annotation.Inject;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang3.ArrayUtils;
-
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,26 +21,6 @@ public class BeanUtil {
         for (Class<?> beanClass : beanClassList) {
             Object obj = ReflectUtil.newInstance(beanClass);
             beanMap.put(beanClass, obj);
-        }
-
-        if (MapUtils.isNotEmpty(beanMap)) {
-            for (Map.Entry<Class<?>, Object> beanEntry : beanMap.entrySet()) {
-                Class<?> beanClass = beanEntry.getKey();
-                Object beanInstance = beanEntry.getValue();
-                Field[] beanFields = beanClass.getDeclaredFields(); // 获取Bean类的所有成员变量
-                if (ArrayUtils.isNotEmpty(beanFields)) {
-                    for (Field beanField : beanFields) {
-                        if (beanField.isAnnotationPresent(Inject.class)) {  // 当前成员变量是否带有Inject注解
-                            Class<?> beanFieldClass = beanField.getType();
-                            Object beanFieldInstance = beanMap.get(beanFieldClass); // 获取Bean实例
-                            if (beanFieldInstance != null) {
-                                // 通过反射初始化BeanField的值
-                                ReflectUtil.setField(beanInstance, beanField, beanFieldInstance);
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 
